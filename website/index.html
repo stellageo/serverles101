@@ -11,21 +11,40 @@
 <body>
   <h1>Up and Running with Serverless Functions</h1>
   <button id="fetch-btn">Fetch</button>
+  <button id="fetch-pokedex-kanto-btn">pokedex Kanto</button>
+  <button id="fetch-pokedex-hoenn-btn">pokedex Hoenn</button>
+
+  <hr> <br />
   <p id="response-output">Response Placeholder!</p>
   <hr> <br />
-  <button id="fetch-pokedex-btn">pokedex</button>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const fetchBtn = document.getElementById('fetch-btn')
-      const fetchPokedexBtn = document.getElementById('fetch-pokedex-btn')
+      const fetchKantoBtn = document.getElementById('fetch-pokedex-kanto-btn')
+      const fetchHoennBtn = document.getElementById('fetch-pokedex-hoenn-btn')
       const responseText = document.getElementById('response-output')
 
-      fetchPokedexBtn.addEventListener('click', async () => {
-        const response = await fetch('/.netlify/functions/pokadex').then(response => response.json())
+      fetchKantoBtn.addEventListener('click', async () => {
+        const response = await fetch('/.netlify/functions/pokadex', {
+          method: 'POST', body: JSON.stringify({
+            region: "kanto"
+          })
+        }).then(response => response.json())
         responseText.innerText = JSON.stringify(response)
         // responseText.innerText = 'holla'
       })
+
+      fetchHoennBtn.addEventListener('click', async () => {
+        const response = await fetch('/.netlify/functions/pokadex', {
+          method: 'POST', body: JSON.stringify({
+            region: "hoenn"
+          })
+        }).then(response => response.json())
+        responseText.innerText = JSON.stringify(response)
+        // responseText.innerText = 'holla'
+      })
+
 
       fetchBtn.addEventListener('click', async () => {
         const response = await fetch('/.netlify/functions/hello-world').then(response => response.json())
